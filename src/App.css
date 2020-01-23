@@ -1,3 +1,16 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
 .App {
   text-align: center;
 }
@@ -28,11 +41,25 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+html{
+  background: gray;
+}
+
+.row{
+  display: flex;
+
+}
+
+.square{
+  border: 1px solid darkgray;
+  padding: 1rem;
+}
+
+.empty{
+/* visibility: hidden; */
+height: 32px;
+width: 40px;
+/* width: ; */
+
 }

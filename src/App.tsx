@@ -1,41 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import './App.css';
 import WorldShaper from './classes/WorldShaper';
 import Grid from './ui/Grid';
-import { World } from './types/World';
+import { ISize, IEntities, WorldMap, IWorldData } from './types/World';
+import { cursorTo } from 'readline';
 
+
+
+// const worldShaper = new WorldShaper();
 
 const App: React.FC = () => {
 
-  const initialEntities = { friendlies: 0, hostiles: 0 };
-  const initialWorldSize = { height: 8, width: 8 };
-  const initialFoodCount = 1;
-  const initialWorld = WorldShaper.newWorld(initialWorldSize, initialEntities, initialFoodCount);
+
+
+  const initialEntities: IEntities = { friendlies: 0, hostiles: 0 };
+  const initialWorldSize: ISize = { height: 8, width: 8 };
+  const initialFoodCount: number = 0;
+  const initialWorldData: IWorldData = { size: initialWorldSize, entities: initialEntities, food: initialFoodCount }
 
   const [entities, setEntities] = useState(initialEntities);
-  const [worldSize, setWorldSize] = useState(initialWorldSize);
-  const [foodCount, setFoodCount] = useState(1);
-  const [world, setWorld] = useState(() => initialWorld);
+  const [size, setSize] = useState(initialWorldSize);
+  const [food, setFood] = useState(1);
 
-  const [count, setCount] = useState(10);
+  // const world = useRef(WorldShaper.newWorld(initialWorldData))
+  const w = useMemo(() => WorldShaper.newWorld(initialWorldData), []);
+  const world = useRef(w);
 
+  const [count, setCount] = useState(0);
 
 
 
   function updateWorld() {
-    const newWorld: World = WorldShaper.newWorld(worldSize, entities, foodCount + 1)
-    setWorld(newWorld);
+    // const newWorldData: IWorldData = { size, entities, food: food + 1 }
+    const newWorld: WorldMap = WorldShaper.addNonEntityToWorld(world.current);
+    // world.current = newWorld;
   }
 
+
   function incrimentFoodCount(amount: number = 1) {
-    let t = foodCount + amount;
-    setFoodCount(t);
-    return 1;
+    setFood(food + amount);
   }
-  async function inc(e: any) {
-    incrimentFoodCount(1);
-    setFoodCount(2);
-    incrimentFoodCount(1);
+
+  function inc() {
+    setCount(count + 1);
+    incrimentFoodCount();
     updateWorld();
   }
 
@@ -45,9 +53,9 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Grid world={world} />
-      <button onClick={inc} >inc</button>
-      <h1>{foodCount}</h1>
+      <Grid world={world.current} />
+      <h2>{count}</h2>
+      <button onClick={inc}>click</button>
     </div>
   );
 }

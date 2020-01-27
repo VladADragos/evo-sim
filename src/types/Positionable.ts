@@ -1,6 +1,4 @@
-import IPoint from './IPoint';
-
-export default class Vec2d {
+export default class Positionable {
     private y: number;
     private x: number;
 
@@ -14,7 +12,4 @@ export default class Vec2d {
 
     setY(y: number): void { this.y = y }
     setX(x: number): void { this.x = x }
-    getYX(): IPoint { return { y: this.getY(), x: this.getX() } }
-
-
 }

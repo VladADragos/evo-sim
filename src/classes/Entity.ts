@@ -1,28 +1,29 @@
 // import { NonEntity } from './NonEntity';
-import { EntityType } from '../types/Enums';
+import { EntityType, NonEntityType } from '../types/Enums';
+import Vec2d from '../types/Vec2d';
 
 export class Entity {
-    private y: number;
-    private x: number;
     private vision: number;
     private foodBar: number;
     private speed: number;
     private type: EntityType;
-    constructor(y: number, x: number, vision: number, foodBar: number, speed: number, type: EntityType) {
-        this.y = y;
-        this.x = x;
+    public position: Vec2d;
+    constructor(position: Vec2d, vision: number, foodBar: number, speed: number, type: EntityType) {
+        this.position = position;
         this.foodBar = foodBar;
         this.vision = vision;
         this.speed = speed;
         this.type = type;
     }
-
-
-    getY(): number { return this.y }
-    getX(): number { return this.x }
     getVision(): number { return this.vision }
     getFoodBar(): number { return this.foodBar }
     getSpeed(): number { return this.speed }
     getType(): EntityType { return this.type }
+    isOfType(type: (EntityType | NonEntityType)): boolean {
+        return this.type === type;
+    }
+    isEmpty(): boolean {
+        return false;
+    }
 
 }

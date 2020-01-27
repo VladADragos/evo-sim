@@ -1,15 +1,20 @@
-import { NonEntityType } from '../types/Enums';
+import { NonEntityType, EntityType } from '../types/Enums';
+import Vec2d from '../types/Vec2d';
 
 export class NonEntity {
-    private y: number;
-    private x: number;
     private type: NonEntityType;
-    constructor(y: number, x: number, type: NonEntityType) {
-        this.y = y;
-        this.x = x;
+    public position: Vec2d;
+    constructor(position: Vec2d, type: NonEntityType) {
         this.type = type;
+        this.position = position;
     }
-    getY(): number { return this.y }
-    getX(): number { return this.x }
+
     getType(): NonEntityType { return this.type }
+    isOfType(type: (EntityType | NonEntityType)): boolean {
+        return this.type === type;
+    }
+
+    isEmpty(): boolean {
+        return this.isOfType(NonEntityType.Empty);
+    }
 }

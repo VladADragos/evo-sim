@@ -1,23 +1,16 @@
-import React, { FunctionComponent } from 'react';
-import { NonEntityType, EntityType } from '../types/Enums';
+import { FunctionComponent } from 'react';
+import Entity from '../classes/subclasses/Entity';
 
 
 
-
-const Icon: FunctionComponent<{ type: NonEntityType | EntityType }> = ({ type }) => {
-    switch (type) {
-        case NonEntityType.Grass:
-            return <i className="fas fa-apple-alt fa-2x fa-fw fa-fh"></i>;
-        case EntityType.Friendly:
-            return <i className="fas fa-crow fa-2x fa-fw fa-fh"></i>
-        case EntityType.Hostile:
-            return <i className="fas fa-cat fa-2x fa-fw fa-fh"></i>
-        case NonEntityType.Empty:
-            return <i className="empty far fa-cicle fa-2x fa-fw fa-fh"></i>;
-        default:
-            return <i className="empty far fa-cicle fa-2x fa-fw fa-fh"></i>;
-    }
+interface Props {
+    entity: Entity
 }
+
+const Icon: FunctionComponent<Props> = ({ entity }) => {
+    return entity.draw();
+}
+
 
 
 export default Icon;

@@ -1,8 +1,8 @@
-import { Entity } from '../classes/Entity';
-import { NonEntity } from '../classes/NonEntity';
+import StaticEntity from '../classes/subclasses/StaticEntity';
+import Entity from '../classes/subclasses/Entity';
 
 
-export type WorldMap = (NonEntity | Entity)[][];
+export type WorldMap = Entity[][];
 export interface ISize {
     height: number,
     width: number;

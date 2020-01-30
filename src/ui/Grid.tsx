@@ -4,8 +4,13 @@ import { WorldMap } from '../types/World';
 // import { NonEntity } from '../classes/NonEntity';
 
 
-const Grid: FunctionComponent<{ world: WorldMap }> = ({ world }) => {
+
+interface Props {
+    world: WorldMap
+}
+const Grid: FunctionComponent<Props> = ({ world }) => {
     return (<div> {world.map((row, i) => <Row row={row} key={i} />)} </div>);
 }
+
 
 export default Grid;

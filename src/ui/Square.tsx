@@ -1,12 +1,18 @@
 import React, { FunctionComponent } from 'react';
 import Icon from './Icon';
-import { EntityType, NonEntityType } from '../types/Enums';
+import Entity from '../classes/subclasses/Entity';
 
 
 
-
-const Square: FunctionComponent<{ type: EntityType | NonEntityType }> = ({ type }) => {
-    return <div className="square"><Icon type={type} /></div>
+interface Props {
+    entity: Entity
 }
+
+const Square: FunctionComponent<Props> = ({ entity }) => {
+    return <div className="square"><Icon entity={entity} /></div>;
+}
+
+
+
 
 export default Square;

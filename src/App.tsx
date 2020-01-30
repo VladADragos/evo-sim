@@ -4,6 +4,9 @@ import WorldShaper from './classes/WorldShaper';
 import Grid from './ui/Grid';
 import { ISize, IEntities, WorldMap, IWorldData } from './types/World';
 import { cursorTo } from 'readline';
+import Food from './classes/entities/Food';
+import Vec2d from './types/Vec2d';
+import StaticEntity from './classes/subclasses/StaticEntity';
 
 
 
@@ -27,8 +30,12 @@ const App: React.FC = () => {
   const world = useRef(w);
 
   const [count, setCount] = useState(0);
+  const f = new Food(new Vec2d(1, 1));
 
-
+  function log(e: StaticEntity) {
+    console.log(e);
+  }
+  log(f);
 
   function updateWorld() {
     // const newWorldData: IWorldData = { size, entities, food: food + 1 }
@@ -45,6 +52,8 @@ const App: React.FC = () => {
     setCount(count + 1);
     incrimentFoodCount();
     updateWorld();
+
+    console.log(world.current);
   }
 
 
@@ -59,5 +68,6 @@ const App: React.FC = () => {
     </div>
   );
 }
+
 
 export default App;

@@ -1,11 +1,11 @@
-export enum NonEntityType {
-    Empty = 10,
-    Block = 11,
-    Water = 12,
-    Grass = 13
+export enum StaticEntityType {
+    Empty = 11,
+    Stone = 12,
+    Water = 13,
+    Food = 14
 }
 
-export enum EntityType {
+export enum DynamicEntityType {
     Hostile = 20,
     Friendly = 21
 }

@@ -1,11 +1,14 @@
-import { NonEntityType, EntityType } from '../types/Enums';
-import { NonEntity } from './NonEntity';
-import { Entity } from './Entity'
+import { StaticEntityType, DynamicEntityType } from '../types/Enums';
+import NonEntity from './subclasses/StaticEntity';
+import DynamicEntity from './subclasses/DynamicEntity'
 import { WorldMap, IWorldData } from '../types/World';
 import { ranNum } from '../util/ranNum';
 import Vec2d from '../types/Vec2d';
 // import World from './World';
 import IPoint from '../types/IPoint';
+import Empty from './entities/Empty';
+import Entity from './subclasses/Entity';
+import Food from './entities/Food';
 
 
 export class WorldShaper {
@@ -18,7 +21,7 @@ export class WorldShaper {
         for (let i: number = 0; i < n; i++) {
             worldMap.push([]);
             for (let j: number = 0; j < n; j++) {
-                worldMap[i].push(new NonEntity(new Vec2d(i, j), NonEntityType.Empty));
+                worldMap[i].push(new Empty(new Vec2d(i, j)));
             }
         }
         return worldMap;
@@ -26,18 +29,10 @@ export class WorldShaper {
 
 
     addNonEntityToWorld(worldMap: WorldMap) {
-        // const ranIndex: number = ranNum(0, this.emptySquares.length - 1)
-        // const point: Vec2d = this.emptySquares[ranIndex];
-        // console.log(this.emptySquares);
-
 
         const index = ranNum(0, this.emptySquares.length - 1);
         const point: IPoint = this.emptySquares[index].getYX();
-
-        // console.log("index " + index);
-        // console.log(point);
-        worldMap[point.y][point.x] = new NonEntity(new Vec2d(point.y, point.x), NonEntityType.Grass);
-        // console.log(this.squareIsEmpty(new Vec2d(point.y, point.x), worldMap));
+        worldMap[point.y][point.x] = new Food(new Vec2d(point.y, point.x));
         this.emptySquares = this.getEmptySquares(worldMap);
 
         return worldMap;
@@ -47,7 +42,7 @@ export class WorldShaper {
 
     addNonEntityAtIndex(point: Vec2d, worldMap: WorldMap) {
         const { y, x }: IPoint = point.getYX();
-        worldMap[y][x] = new NonEntity(new Vec2d(y, x), NonEntityType.Grass);
+        worldMap[y][x] = new NonEntity(new Vec2d(y, x), StaticEntityType.Food);
         this.emptySquares = this.getEmptySquares(worldMap);
         return worldMap;
 
@@ -56,7 +51,7 @@ export class WorldShaper {
 
     squareIsEmpty(point: Vec2d, worldMap: WorldMap): boolean {
         const { y, x }: IPoint = point.getYX();
-        return worldMap[y][x].isEmpty();
+        return worldMap[y][x].getType() === StaticEntityType.Empty;
     }
 
     // update(world: WorldInterface):WorldInterface{
@@ -73,29 +68,29 @@ export class WorldShaper {
     newWorld(world: IWorldData): WorldMap {
         let worldMap: WorldMap = this.initializeEmptyWorld(world.size.height, world.size.width);
         this.emptySquares = this.getEmptySquares(worldMap);
-        this.fillEntity(world.entities.friendlies, EntityType.Friendly, worldMap);
-        this.fillEntity(world.entities.hostiles, EntityType.Hostile, worldMap);
-        this.fillNonEntity(world.food, NonEntityType.Grass, worldMap);
+        this.fillEntity(world.entities.friendlies, DynamicEntityType.Friendly, worldMap);
+        this.fillEntity(world.entities.hostiles, DynamicEntityType.Hostile, worldMap);
+        this.fillNonEntity(world.food, StaticEntityType.Food, worldMap);
         // this.emptySquares = this.getEmptySquares(worldMap);
         console.log("new world");
         return worldMap;
     }
 
 
-    fillEntity(count: number, type: EntityType, worldMap: WorldMap) {
+    fillEntity(count: number, type: DynamicEntityType, worldMap: WorldMap) {
         for (let i = 0; i < count; i++) {
             const index: number = ranNum(0, this.emptySquares.length - 1);
             const point: IPoint = this.emptySquares[index].getYX();
-            worldMap[point.y][point.x] = new Entity(new Vec2d(point.y, point.x), 3, 3, 1, type);
+            worldMap[point.y][point.x] = new DynamicEntity(new Vec2d(point.y, point.x), 3, 3, 1, type);
             this.emptySquares.splice(index, 1);
         }
     }
-    fillNonEntity(count: number, type: NonEntityType, worldMap: WorldMap) {
+    fillNonEntity(count: number, type: StaticEntityType, worldMap: WorldMap) {
         for (let i = 0; i < count; i++) {
             const index = ranNum(0, this.emptySquares.length - 1);
             const point: IPoint = this.emptySquares[index].getYX();
 
-            worldMap[point.y][point.x] = new NonEntity(new Vec2d(point.y, point.x), type);
+            worldMap[point.y][point.x] = new Food(new Vec2d(point.y, point.x));
             this.emptySquares.splice(index, 1);
         }
     }

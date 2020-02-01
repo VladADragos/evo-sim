@@ -1,9 +1,14 @@
 import React from 'react';
 import Entity from '../subclasses/Entity';
 import { StaticEntityType, DynamicEntityType } from '../../types/Enums';
+import Cords from '../../types/Cords';
 
 export default class Empty extends Entity {
     private type: StaticEntityType = StaticEntityType.Empty;
+
+    constructor(position: Cords) {
+        super(position);
+    }
     draw() {
         return <div className="empty"></div>;
     }
@@ -13,5 +18,8 @@ export default class Empty extends Entity {
 
     getType(): StaticEntityType {
         return this.type;
+    }
+    create(position: Cords) {
+        return new Empty(position);
     }
 }

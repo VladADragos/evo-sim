@@ -3,12 +3,13 @@ import { DynamicEntityType, StaticEntityType } from '../../types/Enums';
 import Vec2d from '../../types/Vec2d';
 import Entity from './Entity';
 import React from 'react';
-export default class DynamicEntity extends Entity {
+import Cords from '../../types/Cords';
+export default abstract class DynamicEntity extends Entity {
     private vision: number;
     private foodBar: number;
     private speed: number;
     private type: DynamicEntityType;
-    constructor(position: Vec2d, vision: number, foodBar: number, speed: number, type: DynamicEntityType) {
+    constructor(position: Cords, vision: number, foodBar: number, speed: number, type: DynamicEntityType) {
         super(position);
         this.foodBar = foodBar;
         this.vision = vision;
@@ -25,6 +26,7 @@ export default class DynamicEntity extends Entity {
     draw(): JSX.Element {
         return <h1>Dynamic Entity</h1>;
     }
+
 
 
 

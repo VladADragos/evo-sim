@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
 
 
-  const initialEntities: IEntities = { friendlies: 0, hostiles: 0 };
+  const initialEntities: IEntities = { friendlies: 8, hostiles: 8 };
   const initialWorldSize: ISize = { height: 8, width: 8 };
   const initialFoodCount: number = 0;
   const initialWorldData: IWorldData = { size: initialWorldSize, entities: initialEntities, food: initialFoodCount }
@@ -30,12 +30,10 @@ const App: React.FC = () => {
   const world = useRef(w);
 
   const [count, setCount] = useState(0);
-  const f = new Food(new Vec2d(1, 1));
 
   function log(e: StaticEntity) {
     console.log(e);
   }
-  log(f);
 
   function updateWorld() {
     // const newWorldData: IWorldData = { size, entities, food: food + 1 }
